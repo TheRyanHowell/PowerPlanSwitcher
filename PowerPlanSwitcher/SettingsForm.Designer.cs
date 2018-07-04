@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.idleSelect = new System.Windows.Forms.ComboBox();
             this.batteryInput = new System.Windows.Forms.NumericUpDown();
@@ -36,10 +37,10 @@
             this.batterySelect = new System.Windows.Forms.ComboBox();
             this.idleCheckBox = new System.Windows.Forms.CheckBox();
             this.batteryCheckBox = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pollInput = new System.Windows.Forms.NumericUpDown();
-            this.pollIntervalLabel = new System.Windows.Forms.Label();
             this.autoStartCheckBox = new System.Windows.Forms.CheckBox();
+            this.pollIntervalLabel = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.batteryInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.idleInput)).BeginInit();
@@ -191,19 +192,6 @@
             0});
             this.pollInput.ValueChanged += new System.EventHandler(this.pollInput_ValueChanged);
             // 
-            // pollIntervalLabel
-            // 
-            this.pollIntervalLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pollIntervalLabel.AutoSize = true;
-            this.pollIntervalLabel.Location = new System.Drawing.Point(4, 60);
-            this.pollIntervalLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.pollIntervalLabel.Name = "pollIntervalLabel";
-            this.pollIntervalLabel.Size = new System.Drawing.Size(113, 17);
-            this.pollIntervalLabel.TabIndex = 8;
-            this.pollIntervalLabel.Text = "Poll Interval (ms)";
-            this.pollIntervalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.pollIntervalLabel, "The application checks for battery state and idle time on a timer.");
-            // 
             // autoStartCheckBox
             // 
             this.autoStartCheckBox.AutoSize = true;
@@ -217,15 +205,29 @@
             this.autoStartCheckBox.UseVisualStyleBackColor = true;
             this.autoStartCheckBox.CheckedChanged += new System.EventHandler(this.autoStartCheckBox_CheckedChanged);
             // 
+            // pollIntervalLabel
+            // 
+            this.pollIntervalLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pollIntervalLabel.AutoSize = true;
+            this.pollIntervalLabel.Location = new System.Drawing.Point(4, 60);
+            this.pollIntervalLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.pollIntervalLabel.Name = "pollIntervalLabel";
+            this.pollIntervalLabel.Size = new System.Drawing.Size(113, 17);
+            this.pollIntervalLabel.TabIndex = 8;
+            this.pollIntervalLabel.Text = "Poll Interval (ms)";
+            this.pollIntervalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.pollIntervalLabel, "The application checks for battery state and idle time on a timer.");
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 134);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SettingsForm";
-            this.Text = "SettingsForm";
+            this.Text = "PowerPlanSwitcher Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
