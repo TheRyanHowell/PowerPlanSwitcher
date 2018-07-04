@@ -8,12 +8,13 @@ namespace PowerPlanSwitcher
 {
     public partial class SettingsForm : Form
     {
-        private bool batEnabled = true;
+        // Define default settings
+        private bool batEnabled = false;
         private int batLevel = 50;
         private Guid batPlan = TrayContext.powerSaverPlanGuid;
 
 
-        private bool idleEnabled = true;
+        private bool idleEnabled = false;
         private int idleTimeout = 60000;
         private Guid idlePlan = TrayContext.powerSaverPlanGuid;
 
@@ -22,7 +23,7 @@ namespace PowerPlanSwitcher
 
         RegistryKey registryAppKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-
+        
         public SettingsForm()
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace PowerPlanSwitcher
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            // Get existing settings from registry
             if (registryAppKey.GetValue("PowerPlanSwitcher") == null)
             {
                 autoStart = false;
@@ -102,9 +104,11 @@ namespace PowerPlanSwitcher
             }
             catch (Exception) { }
 
+            // Define dropdown style
             idleSelect.DropDownStyle = ComboBoxStyle.DropDownList;
             batterySelect.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            // Create dropdown options of power plans, bound by index
             Dictionary<string, string> planSource = new Dictionary<string, string>();
             var planList = PowerManager.ListPlans();
             var idleSelectedIndex = 0;
@@ -135,6 +139,7 @@ namespace PowerPlanSwitcher
             batterySelect.ValueMember = "Key";
             batterySelect.SelectedIndex = batterySelectedIndex;
 
+            // Load all other settings into form
             batteryInput.Value = this.batLevel;
             idleInput.Value = this.idleTimeout;
             batteryCheckBox.Checked = this.batEnabled;
@@ -188,10 +193,11 @@ namespace PowerPlanSwitcher
         private void autoStartCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.autoStart = autoStartCheckBox.Checked;
-            if(this.autoStart)
+            if (this.autoStart)
             {
                 registryAppKey.SetValue("PowerPlanSwitcher", Application.ExecutablePath);
-            } else
+            }
+            else
             {
                 registryAppKey.DeleteValue("PowerPlanSwitcher", false);
             }

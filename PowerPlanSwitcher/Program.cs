@@ -37,6 +37,7 @@ namespace PowerPlanSwitcher
         private bool sleep = false;
         private Guid oldPlan = balancedPlanGuid;
 
+        // Import user32.dll, used to figure out how long it's been since user activity
         [DllImport("user32.dll")]
         public static extern Boolean GetLastInputInfo(ref tagLASTINPUTINFO plii);
 
@@ -48,25 +49,29 @@ namespace PowerPlanSwitcher
 
         public TrayContext()
         {
+            // Create the settings form, hidden
             settingsForm = new SettingsForm();
             settingsForm.Hide();
             
+            // Set the tray icon, with the power plan context menu
             trayIcon = new NotifyIcon()
             {
                 Icon = Resources.AppIcon,
                 ContextMenu = new ContextMenu(GetTrayList().ToArray()),
                 Visible = true,
-                
             };
 
+            // Update tray hover text
             UpdateTrayText();
 
+            // Setup a timer to check for events
             aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimerEvent);
             aTimer.Interval = settingsForm.getPollInterval();
             aTimer.Enabled = true;
         }
 
+        // Get the list of power plans for the tray context menu
         private List<MenuItem> GetTrayList()
         {
             var activePlan = PowerManager.GetActivePlan();
@@ -91,17 +96,20 @@ namespace PowerPlanSwitcher
             return menuList;
         }
 
+        // Change power plan, updating the context menu
         void ChangePlan(System.Guid plan)
         {
             PowerManager.SetActivePlan(plan);
             UpdateTrayMenu();
         }
 
+        // Re-generate the context menu
         private void UpdateTrayMenu()
         {
             trayIcon.ContextMenu = new ContextMenu(GetTrayList().ToArray());
         }
 
+        // Update tray hover text, with power plan and battery status
         private void UpdateTrayText()
         {
             trayIcon.Text = PowerManager.GetPlanName(PowerManager.GetActivePlan());
@@ -109,23 +117,72 @@ namespace PowerPlanSwitcher
             if (SystemInformation.PowerStatus.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery)
             {
                 trayIcon.Text += " | " + SystemInformation.PowerStatus.BatteryLifePercent.ToString("P0");
-                if(SystemInformation.PowerStatus.BatteryChargeStatus == BatteryChargeStatus.Charging)
+                if (SystemInformation.PowerStatus.BatteryChargeStatus == BatteryChargeStatus.Charging)
                 {
                     trayIcon.Text += " | Charging";
+                }
+
+                if (SystemInformation.PowerStatus.BatteryLifePercent <= 100)
+                {
+                    trayIcon.Icon = Resources.Battery100;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 90)
+                {
+                    trayIcon.Icon = Resources.Battery90;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 80)
+                {
+                    trayIcon.Icon = Resources.Battery80;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 70)
+                {
+                    trayIcon.Icon = Resources.Battery70;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 60)
+                {
+                    trayIcon.Icon = Resources.Battery60;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 50)
+                {
+                    trayIcon.Icon = Resources.Battery50;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 40)
+                {
+                    trayIcon.Icon = Resources.Battery40;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 30)
+                {
+                    trayIcon.Icon = Resources.Battery30;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 20)
+                {
+                    trayIcon.Icon = Resources.Battery20;
+                }
+                else if (SystemInformation.PowerStatus.BatteryLifePercent <= 10)
+                {
+                    trayIcon.Icon = Resources.Battery10;
                 }
             }
         }
 
+        // When the event timer fires
         private void OnTimerEvent(object source, ElapsedEventArgs e)
         {
+            // Update timer the interval based on settings
             aTimer.Interval = settingsForm.getPollInterval();
+           
             var madeChange = false;
+            
+            // If idle event is enabled
             if (settingsForm.getIdleEnabled())
             {
+                // If we are idle beyond timeout
                 if (GetIdleTime() > settingsForm.getIdleTimeout())
                 {
+                    // And not already sleeping
                     if (!sleep)
                     {
+                        // Store the old plan, and switch to the defined sleep plan
                         oldPlan = PowerManager.GetActivePlan();
                         PowerManager.SetActivePlan(settingsForm.getIdlePlan());
                         sleep = true;
@@ -133,6 +190,7 @@ namespace PowerPlanSwitcher
                         Console.WriteLine("Sleep: Idle");
                     }
                 }
+                // We are sleeping but no longer idle, change to previous plan
                 else if (sleep == true)
                 {
                     PowerManager.SetActivePlan(oldPlan);
@@ -142,15 +200,20 @@ namespace PowerPlanSwitcher
                 }
             }
 
+            // If battery event enabled
             if (settingsForm.getBatEnabled())
             {
-                if (SystemInformation.PowerStatus.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery)
+                // If battery in use
+                if (SystemInformation.PowerStatus.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery && SystemInformation.PowerStatus.BatteryChargeStatus != BatteryChargeStatus.Unknown)
                 {
+                    // If battery lower than defined level for sleep
                     var batPer = SystemInformation.PowerStatus.BatteryLifePercent;
                     if (batPer < settingsForm.getBatLevel())
                     {
+                        // And not already sleeping
                         if (!sleep)
                         {
+                            // Store the old plan, and switch to the defined sleep plan
                             oldPlan = PowerManager.GetActivePlan();
                             PowerManager.SetActivePlan(settingsForm.getBatPlan());
                             sleep = true;
@@ -159,6 +222,7 @@ namespace PowerPlanSwitcher
                             Console.WriteLine("Sleep: Battery");
                         }
                     }
+                    // We are sleeping but no longer below battery threshold, change to previous plan
                     else if (sleep == true)
                     {
                         PowerManager.SetActivePlan(oldPlan);
@@ -170,12 +234,15 @@ namespace PowerPlanSwitcher
                 }
             }
 
+            // If the state changed, update the tray with new power plan
             if (madeChange)
             {
                 UpdateTrayMenu();
+                UpdateTrayText();
             }
         }
 
+        // Figure out how long we have been idle for
         private Int32 GetIdleTime()
         {
             tagLASTINPUTINFO LastInput = new tagLASTINPUTINFO();
@@ -190,11 +257,13 @@ namespace PowerPlanSwitcher
             return IdleTime;
         }
 
+        // Handler for settings button in context menu
         void SettingsHandler(object sender, EventArgs e)
         {
             settingsForm.Show();
         }
 
+        // Handle for exit button in context menu
         void ExitHandler(object sender, EventArgs e)
         {
             trayIcon.Visible = false;

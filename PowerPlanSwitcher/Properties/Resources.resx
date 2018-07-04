@@ -118,7 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AppIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Battery-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-10.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-100.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-20.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-30.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-40.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-50.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-60" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-60.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-70" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-70.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-80.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery-90" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\Documents\Logo\Battery-90.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

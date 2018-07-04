@@ -25,30 +25,6 @@ namespace PowerPlanSwitcher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool batEnabled {
-            get {
-                return ((bool)(this["batEnabled"]));
-            }
-            set {
-                this["batEnabled"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool idleEnabled {
-            get {
-                return ((bool)(this["idleEnabled"]));
-            }
-            set {
-                this["idleEnabled"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public int batLevel {
             get {
@@ -104,6 +80,30 @@ namespace PowerPlanSwitcher.Properties {
             }
             set {
                 this["pollInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool batEnabled {
+            get {
+                return ((bool)(this["batEnabled"]));
+            }
+            set {
+                this["batEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool idleEnabled {
+            get {
+                return ((bool)(this["idleEnabled"]));
+            }
+            set {
+                this["idleEnabled"] = value;
             }
         }
     }
